@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "CameraLock",
+                    "name": "Camera Lock",
                     "type": "Button",
                     "id": "cb4c203a-53d7-48e8-905c-336f4da51d1c",
                     "expectedControlType": "",
@@ -118,7 +118,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CameraLock",
+                    "action": "Camera Lock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -129,7 +129,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CameraLock",
+                    "action": "Camera Lock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
