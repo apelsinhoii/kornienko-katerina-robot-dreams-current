@@ -34,7 +34,6 @@ namespace Lesson7
             _moveAction.canceled += MoveCanceledHandler;
 
             _lookAroundAction.performed += LookPerformedHandler;
-            _lookAroundAction.canceled += LookCanceledHandler;
             
             _cameraLockAction.performed += CameraLockPerformedHandler;
             _cameraLockAction.canceled += CameraLockCanceledHandler;
