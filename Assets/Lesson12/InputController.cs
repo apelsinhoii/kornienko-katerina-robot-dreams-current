@@ -29,6 +29,8 @@ namespace PhysX
         [SerializeField] private string _reloadName;
         [SerializeField] private string _escapeName;
         [SerializeField] private string _jumpName;
+        [SerializeField] private CursorLockMode _enabledCursorMode;
+        [SerializeField] private CursorLockMode _disabledCursorMode;
 
         private InputAction _moveAction;
         private InputAction _lookAroundAction;
@@ -49,7 +51,7 @@ namespace PhysX
         private void OnEnable()
         {
             Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = _enabledCursorMode;
             
             _inputActionAsset.Enable();
             
@@ -71,6 +73,7 @@ namespace PhysX
             _moveAction.canceled += MoveCanceledHandler;
         
             _lookAroundAction.performed += LookPerformedHandler;
+            _lookAroundAction.canceled += LookPerformedHandler;
 
             _primaryFireAction.performed += PrimaryFirePerformedHandler;
             
@@ -92,7 +95,7 @@ namespace PhysX
         private void OnDisable()
         {
             Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = _disabledCursorMode;
             
             _actionMap.Disable();
         }
