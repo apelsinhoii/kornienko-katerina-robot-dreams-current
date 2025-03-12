@@ -9190,7 +9190,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372540843}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -17688,6 +17688,7 @@ GameObject:
   - component: {fileID: 693923356}
   - component: {fileID: 693923355}
   - component: {fileID: 693923354}
+  - component: {fileID: 693923357}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -17822,7 +17823,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693923345}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30a21b8ed6e561b43bb0892d23833147, type: 3}
   m_Name: 
@@ -17849,7 +17850,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693923345}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fe5322b25236c7458c5b22ad5e1ccc2, type: 3}
   m_Name: 
@@ -17874,7 +17875,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693923345}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19c6b3ac3dc2fd44fbf591649cf973ba, type: 3}
   m_Name: 
@@ -17887,6 +17888,31 @@ MonoBehaviour:
     m_Bits: 51
   _mixingCamera: {fileID: 1566175025}
   _aimSpeed: 5
+--- !u!114 &693923357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693923345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b708abff6a4b4c41a339f2e8f2764f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _destructableSystem: {fileID: 94113619}
+  _cameraTransform: {fileID: 372540844}
+  _rayDistance: 50
+  _rayMask:
+    serializedVersion: 2
+    m_Bits: 51
+  _explsionMask:
+    serializedVersion: 2
+    m_Bits: 51
+  _explosionController: {fileID: 1381421324}
+  _explosionRadius: 1.5
+  _explosionForce: 15000
+  _verticalOffset: 0
 --- !u!1001 &706541973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51211,29 +51237,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 523161508032491767, guid: a2ea28aced5a0344b83e861325206b2f,
         type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000,
-        type: 0}
-    - target: {fileID: 523161508032491767, guid: a2ea28aced5a0344b83e861325206b2f,
-        type: 3}
       propertyPath: m_Name
       value: MullzePoint
       objectReference: {fileID: 0}
-    - target: {fileID: 6340182199590285254, guid: a2ea28aced5a0344b83e861325206b2f,
+    - target: {fileID: 1552384641776929715, guid: a2ea28aced5a0344b83e861325206b2f,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6340182199590285254, guid: a2ea28aced5a0344b83e861325206b2f,
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b40672b9623f61e489e11b32a62a55e5, type: 2}
+    - target: {fileID: 1552384641776929715, guid: a2ea28aced5a0344b83e861325206b2f,
         type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6340182199590285254, guid: a2ea28aced5a0344b83e861325206b2f,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
+      propertyPath: m_Parameters.colorGradient.ctime1
+      value: 34695
       objectReference: {fileID: 0}
     - target: {fileID: 6340182199590285254, guid: a2ea28aced5a0344b83e861325206b2f,
         type: 3}
@@ -51289,10 +51304,8 @@ PrefabInstance:
         type: 3}
       propertyPath: _destructor
       value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8872460934360477485, guid: a2ea28aced5a0344b83e861325206b2f, type: 3}
-    - {fileID: 1552384641776929715, guid: a2ea28aced5a0344b83e861325206b2f, type: 3}
+      objectReference: {fileID: 693923357}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

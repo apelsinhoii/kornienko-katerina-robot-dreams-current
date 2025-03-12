@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: MullzePoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523161508032491767}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.530208, y: 0.07036418, z: -0.03653892, w: 0.8441525}
+  m_LocalRotation: {x: 0.53020936, y: 0.07036132, z: -0.03653619, w: 0.8441519}
   m_LocalPosition: {x: -0.7595482, y: -0.2763484, z: 4.532888}
-  m_LocalScale: {x: 0.22040279, y: 0.31701228, z: 0.2204028}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 64.197, y: 10.597, z: 1.702}
 --- !u!114 &8872460934360477485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +70,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: b40672b9623f61e489e11b32a62a55e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
