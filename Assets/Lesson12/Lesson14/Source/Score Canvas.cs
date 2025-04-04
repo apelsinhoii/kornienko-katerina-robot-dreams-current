@@ -11,10 +11,10 @@ namespace Dummies
         [SerializeField] private CanvasGroup _canvasGroup;
         
         [SerializeField] private TextMeshProUGUI _kills;
-        [SerializeField] private TextMeshProUGUI _deaths;
-        [SerializeField] private TextMeshProUGUI _assists;
+        //[SerializeField] private TextMeshProUGUI _deaths;
+        //[SerializeField] private TextMeshProUGUI _assists;
 
-        [SerializeField] private TextMeshProUGUI _accuracy;
+        //[SerializeField] private TextMeshProUGUI _accuracy;
 
         private bool _updateRequested;
         
@@ -39,9 +39,9 @@ namespace Dummies
             _updateRequested = false;
 
             _kills.text = _scoreSystem.KDA.x.ToString();
-            _deaths.text = _scoreSystem.KDA.y.ToString();
-            _assists.text = _scoreSystem.KDA.z.ToString();
-            _accuracy.text = _scoreSystem.Accuracy.ToString();
+            //_deaths.text = _scoreSystem.KDA.y.ToString();
+            //_assists.text = _scoreSystem.KDA.z.ToString();
+            //_accuracy.text = _scoreSystem.Accuracy.ToString();
         }
 
         private void ScoreInputHandler(bool show)
