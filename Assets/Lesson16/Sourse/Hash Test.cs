@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class HashTest : MonoBehaviour
+namespace Lesson_15.MainMenu.Source
 {
-    // Start is called before the first frame update
-    void Start()
+    public class HashTest : MonoBehaviour
     {
+        public class TestToo
+        {
+            
+        }
         
-    }
+        [SerializeField] private Collider _collider;
 
-    // Update is called once per frame
-    void Update()
-    {
+        private TestToo testToo = new();
+
+        [ContextMenu("Test")]
+        private void Test()
+        {
+            int unityHash = _collider.GetHashCode();
+            int managedHash = RuntimeHelpers.GetHashCode(_collider);
+            Debug.Log($"Unity hash: {unityHash}\nManaged hash: {managedHash}");
+        }
         
+        [ContextMenu("Test 2")]
+        private void Test2()
+        {
+            int unityHash = testToo.GetHashCode();
+            int managedHash = RuntimeHelpers.GetHashCode(testToo);
+            Debug.Log($"Unity hash: {unityHash}\nManaged hash: {managedHash}");
+        }
     }
 }

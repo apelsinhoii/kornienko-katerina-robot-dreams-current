@@ -1,18 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ReloadHUD : MonoBehaviour
+namespace MainMenu
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ReloadHUD : MonoBehaviour
     {
-        
-    }
+        //[SerializeField] private HitScanGunCooldown _gun;
+        [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private Image _image;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            //_gun.OnReload += ReloadHandler;
+            enabled = false;
+        }
+
+        private void ReloadHandler(bool active)
+        {
+            _canvasGroup.alpha = active ? 1f : 0f;
+            enabled = active;
+        }
+
+        private void Update()
+        {
+            //_image.fillAmount = _gun.Reload.Progress;
+        }
     }
 }
