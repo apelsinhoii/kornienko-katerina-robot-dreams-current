@@ -15,7 +15,7 @@ namespace PhysX
         public static event Action OnReload;
         public static event Action OnEscape;
         public static event Action OnJump;
-    
+
         [SerializeField] private InputActionAsset _inputActionAsset;
         [SerializeField] private string _mapName;
         [SerializeField] private string _UImapName;
@@ -34,7 +34,6 @@ namespace PhysX
 
         private InputAction _moveAction;
         private InputAction _lookAroundAction;
-        private InputAction _pointerPositionAction;
         private InputAction _primaryFireAction;
         private InputAction _secondaryFireAction;
         private InputAction _grenadeAction;
@@ -43,24 +42,21 @@ namespace PhysX
         private InputAction _escapeAction;
         private InputAction _jumpAction;
 
-        private bool _inputUpdated;
-
         private InputActionMap _actionMap;
         private InputActionMap _gameplayUIActionMap;
-        
+
         private void OnEnable()
         {
             Cursor.visible = false;
             Cursor.lockState = _enabledCursorMode;
-            
+
             _inputActionAsset.Enable();
-            
+
             _actionMap = _inputActionAsset.FindActionMap(_mapName);
             _gameplayUIActionMap = _inputActionAsset.FindActionMap(_UImapName);
-            
+
             _moveAction = _actionMap[_moveName];
             _lookAroundAction = _actionMap[_lookAroundName];
-            //_pointerPositionAction = actionMap[_pointerPositionName];
             _primaryFireAction = _actionMap[_primaryFireName];
             _secondaryFireAction = _actionMap[_secondaryFireName];
             _grenadeAction = _actionMap[_grenadeName];
@@ -71,24 +67,24 @@ namespace PhysX
 
             _moveAction.performed += MovePerformedHandler;
             _moveAction.canceled += MoveCanceledHandler;
-        
+
             _lookAroundAction.performed += LookPerformedHandler;
             _lookAroundAction.canceled += LookPerformedHandler;
 
             _primaryFireAction.performed += PrimaryFirePerformedHandler;
-            
+
             _secondaryFireAction.performed += SecondaryFirePerformedHandler;
             _secondaryFireAction.canceled += SecondaryFireCanceledHandler;
 
             _grenadeAction.performed += GrenadePerformedHandler;
-            
+
             _scoreAction.performed += ScorePerformedHandler;
             _scoreAction.canceled += ScoreCanceledHandler;
-            
+
             _reloadAction.performed += ReloadPerformedHandler;
-            
+
             _jumpAction.performed += JumpPerformedHandler;
-            
+
             _escapeAction.performed += EscapePerformedHandler;
         }
 
@@ -96,31 +92,34 @@ namespace PhysX
         {
             Cursor.visible = true;
             Cursor.lockState = _disabledCursorMode;
-            
-            _actionMap.Disable();
-        }
 
-        private void OnDestroy()
-        {
+            _inputActionAsset.Disable();
+
             _moveAction.performed -= MovePerformedHandler;
             _moveAction.canceled -= MoveCanceledHandler;
-        
+
             _lookAroundAction.performed -= LookPerformedHandler;
+            _lookAroundAction.canceled -= LookPerformedHandler;
 
             _primaryFireAction.performed -= PrimaryFirePerformedHandler;
-            
+
             _secondaryFireAction.performed -= SecondaryFirePerformedHandler;
             _secondaryFireAction.canceled -= SecondaryFireCanceledHandler;
 
             _grenadeAction.performed -= GrenadePerformedHandler;
-            
+
             _scoreAction.performed -= ScorePerformedHandler;
             _scoreAction.canceled -= ScoreCanceledHandler;
-            
+
             _reloadAction.performed -= ReloadPerformedHandler;
-            
+
+            _jumpAction.performed -= JumpPerformedHandler;
+
             _escapeAction.performed -= EscapePerformedHandler;
-            
+        }
+
+        private void OnDestroy()
+        {
             OnMoveInput = null;
             OnLookInput = null;
             OnPrimaryInput = null;
@@ -129,18 +128,19 @@ namespace PhysX
             OnScoreInput = null;
             OnReload = null;
             OnEscape = null;
+            OnJump = null;
         }
 
         private void MovePerformedHandler(InputAction.CallbackContext context)
         {
             OnMoveInput?.Invoke(context.ReadValue<Vector2>());
         }
-    
+
         private void MoveCanceledHandler(InputAction.CallbackContext context)
         {
             OnMoveInput?.Invoke(context.ReadValue<Vector2>());
         }
-    
+
         private void LookPerformedHandler(InputAction.CallbackContext context)
         {
             OnLookInput?.Invoke(context.ReadValue<Vector2>());
@@ -150,27 +150,27 @@ namespace PhysX
         {
             OnPrimaryInput?.Invoke();
         }
-        
+
         private void SecondaryFirePerformedHandler(InputAction.CallbackContext context)
         {
             OnSecondaryInput?.Invoke(true);
         }
-        
+
         private void SecondaryFireCanceledHandler(InputAction.CallbackContext context)
         {
             OnSecondaryInput?.Invoke(false);
         }
-        
+
         private void GrenadePerformedHandler(InputAction.CallbackContext context)
         {
             OnGrenadeInput?.Invoke();
         }
-        
+
         private void ScorePerformedHandler(InputAction.CallbackContext context)
         {
             OnScoreInput?.Invoke(true);
         }
-        
+
         private void ScoreCanceledHandler(InputAction.CallbackContext context)
         {
             OnScoreInput?.Invoke(false);
@@ -180,12 +180,12 @@ namespace PhysX
         {
             OnReload?.Invoke();
         }
-        
+
         private void JumpPerformedHandler(InputAction.CallbackContext context)
         {
             OnJump?.Invoke();
         }
-        
+
         private void EscapePerformedHandler(InputAction.CallbackContext context)
         {
             OnEscape?.Invoke();

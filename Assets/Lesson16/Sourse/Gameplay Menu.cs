@@ -8,7 +8,7 @@ namespace MainMenu
     public class GameplayMenu : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
-        
+
         [SerializeField] private Button _confrimButton;
         [SerializeField] private Button _cancelButton;
         [SerializeField] private string _lobbySceneName;
@@ -25,11 +25,13 @@ namespace MainMenu
                 _inputController.enabled = !value;
             }
         }
-        
+
         private void Awake()
         {
             _confrimButton.onClick.AddListener(ConfirmButtonHandler);
             _cancelButton.onClick.AddListener(CancelButtonHandler);
+
+            Enabled = false;
         }
 
         private void Start()
