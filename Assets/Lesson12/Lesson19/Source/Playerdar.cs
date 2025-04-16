@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BehaviourTreeSystem
 {
-    public class Playerdar : MonoBehaviour
+    public class Playerdar : MonoBehaviour, IPlayerdar
     {
         public enum State
         {
@@ -17,6 +17,7 @@ namespace BehaviourTreeSystem
         [SerializeField] private EnemyController _enemyController;
         [SerializeField] private float _range;
         [SerializeField] private float _angle;
+        [SerializeField] private LayerMask _layerMask;
 
         private float _cosine;
         
@@ -153,7 +154,7 @@ namespace BehaviourTreeSystem
                 if (Vector3.Dot(playerDirection, forward) < _cosine)
                     return false;
             }
-            if (!Physics.Raycast(position, (playerPosition - position).normalized, out RaycastHit hit, _range))
+            if (!Physics.Raycast(position, (playerPosition - position).normalized, out RaycastHit hit, _range, _layerMask))
                 return false;
             if (hit.collider != _playerService.Player.CharacterController)
                 return false;
