@@ -11,7 +11,7 @@ namespace StateMachineSystem.UserInterface
         
         [SerializeField] private Button _confrimButton;
         [SerializeField] private Button _cancelButton;
-        [SerializeField] private InputController _inputController;
+        [SerializeField] private Lesson19.InputControllerr _inputController;
 
         public bool Enabled
         {

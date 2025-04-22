@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Lesson19;
 using StateMachineSystem.ServiceLocatorSystem;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace StateMachineSystem.Locomotion
         
         private bool _grounded;
         
-        private InputController _inputController;
+        private InputControllerr _inputController;
         
         public IdleState(StateMachine stateMachine,
             byte stateId,
@@ -25,7 +26,7 @@ namespace StateMachineSystem.Locomotion
                 new BaseCondition((byte)LocomotionState.Fall, IsFalling)
             };
             
-            _inputController = ServiceLocator.Instance.GetService<InputController>();
+            _inputController = ServiceLocator.Instance.GetService<Lesson19.InputControllerr>();
             
             _inputController.OnMoveInput += MoveHandler;
         }

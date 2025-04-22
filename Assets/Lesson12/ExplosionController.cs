@@ -16,15 +16,31 @@ public class ExplosionController : MonoBehaviour
 
     public void ApplyRadius(float radius)
     {
-        _sphereMain = _sphere.main;
-        _sparksShape = _sparks.shape;
-        _waveShape = _wave.shape;
-        _smokeShape = _smoke.shape;
 
-        _sphereMain.startSize = radius * 2f;
-        _sparksShape.radius = radius * 4f / 3f;
-        _waveShape.radius = radius * 4f / 3f;
-        _smokeShape.radius = radius * 4f / 3f;
+        if (_sphere != null)
+        {
+            _sphereMain = _sphere.main;
+            _sphereMain.startSize = radius * 2f;
+        }
+
+        if (_sparks != null)
+        {
+            _sparksShape = _sparks.shape;
+            _sparksShape.radius = radius * 4f / 3f;
+        }
+
+        if (_wave != null)
+        {
+            _waveShape = _wave.shape;
+            _waveShape.radius = radius * 4f / 3f;
+        }
+
+        if (_smoke != null)
+        {
+            _smokeShape = _smoke.shape;
+            _smokeShape.radius = radius * 4f / 3f;
+        }
+
     }
 
     public void Play()

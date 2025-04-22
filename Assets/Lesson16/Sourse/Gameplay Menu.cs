@@ -12,7 +12,7 @@ namespace MainMenu
         [SerializeField] private Button _confrimButton;
         [SerializeField] private Button _cancelButton;
         [SerializeField] private string _lobbySceneName;
-        [SerializeField] private PhysX.InputController _inputController;
+        [SerializeField] private Lesson19.InputControllerr _inputControllerr;
 
         public bool Enabled
         {
@@ -22,7 +22,7 @@ namespace MainMenu
                 if (_canvas.enabled == value)
                     return;
                 _canvas.enabled = value;
-                _inputController.enabled = !value;
+                _inputControllerr.enabled = !value;
             }
         }
 

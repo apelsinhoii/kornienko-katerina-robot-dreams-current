@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class ShootParticles : MonoBehaviour
 {
-    public ParticleSystem particleSystem;
+    public ParticleSystem myParticleSystem;
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            particleSystem.Emit(5); 
+            myParticleSystem.Emit(5); 
         }
     }
 }

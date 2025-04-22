@@ -3,7 +3,7 @@ using StateMachineSystem.ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace StateMachineSystem
+namespace Lesson19
 {
     public class InputControllerr : MonoServiceBase
     {
@@ -60,7 +60,7 @@ namespace StateMachineSystem
 
         private bool _initialized;
         
-        public override Type Type { get; } = typeof(InputController);
+        public override Type Type { get; } = typeof(InputControllerr);
 
         public InputAction MoveAction => _moveAction;
         public InputAction LookAroundAction => _lookAroundAction;

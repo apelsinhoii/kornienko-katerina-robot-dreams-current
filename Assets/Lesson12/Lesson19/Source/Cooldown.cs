@@ -6,7 +6,7 @@ namespace MainMenu
 {
     public class Cooldown
     {
-        public event Action<bool> OnCooldown; 
+        //public event Action<bool> OnCooldown; 
         
         private float _cooldown;
         private float _reciprocal;

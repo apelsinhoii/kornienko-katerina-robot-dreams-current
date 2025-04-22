@@ -1,3 +1,4 @@
+using Lesson19;
 using StateMachineSystem.ServiceLocatorSystem;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace StateMachineSystem.Locomotion
 
         private void Start()
         {
-            ServiceLocator.Instance.GetService<InputController>().OnJump += JumpHandler;
+            ServiceLocator.Instance.GetService<InputControllerr>().OnJump += JumpHandler;
         }
 
         private void JumpHandler()

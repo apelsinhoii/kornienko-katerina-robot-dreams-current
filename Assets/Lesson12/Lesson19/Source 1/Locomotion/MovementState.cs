@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Lesson19;
 using StateMachineSystem.ServiceLocatorSystem;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace StateMachineSystem.Locomotion
 
         private Vector3 _localDirection;
         
-        private InputController _inputController;
+        private InputControllerr _inputController;
         
         public MovementState(
             StateMachine stateMachine,
@@ -33,7 +34,7 @@ namespace StateMachineSystem.Locomotion
                 new BaseCondition((byte)LocomotionState.Fall, IsFalling)
             };
             
-            _inputController = ServiceLocator.Instance.GetService<InputController>();
+            _inputController = ServiceLocator.Instance.GetService<Lesson19.InputControllerr>();
             
             _inputController.OnMoveInput += MoveHandler;
         }
