@@ -15,17 +15,17 @@ namespace StateMachineSystem.VisualEffects
             public Locomotion.LocomotionState state;
             public Color color;
         }
-        
+
         [SerializeField] private LocomotionController _locomotionController;
         [SerializeField] private Renderer _renderer;
         [SerializeField] private RimColorData[] _rimColors;
-        
+
         private Dictionary<Locomotion.LocomotionState, Color> _colors = new();
-        
+
         private void Awake()
         {
             _renderer.material.SetColor(RimColor, Color.black);
-            
+
             _colors.Clear();
             for (int i = 0; i < _rimColors.Length; ++i)
             {
@@ -38,7 +38,14 @@ namespace StateMachineSystem.VisualEffects
 
         private void SetRimColor(LocomotionState state)
         {
-            _renderer.material.SetColor(RimColor, _colors[state]);
+            if (_colors.TryGetValue(state, out var color))
+            {
+                _renderer.material.SetColor(RimColor, color);
+            }
+            else
+            {
+                Debug.LogWarning($"No rim color set for state: {state}");
+            }
         }
     }
 }
