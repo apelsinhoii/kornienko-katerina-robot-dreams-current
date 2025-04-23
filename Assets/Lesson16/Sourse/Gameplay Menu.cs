@@ -21,7 +21,12 @@ namespace MainMenu
             {
                 if (_canvas.enabled == value)
                     return;
+
                 _canvas.enabled = value;
+
+                Cursor.visible = value;
+                Cursor.lockState = value ? CursorLockMode.Confined : CursorLockMode.Locked;
+
                 _inputControllerr.enabled = !value;
             }
         }
@@ -36,12 +41,24 @@ namespace MainMenu
 
         private void Start()
         {
-            PhysX.InputController.OnEscape += EscapeHandler;
+            _inputControllerr.OnEscape += EscapeHandler;
+            _inputControllerr.OnInventory += InventoryHandler;
+        }
+
+        private void OnDestroy()
+        {
+            _inputControllerr.OnEscape -= EscapeHandler;
+            _inputControllerr.OnInventory -= InventoryHandler;
         }
 
         private void EscapeHandler()
         {
             Enabled = !Enabled;
+        }
+
+        private void InventoryHandler()
+        {
+            Debug.Log("Tab (Inventory) pressed");
         }
 
         private void ConfirmButtonHandler()

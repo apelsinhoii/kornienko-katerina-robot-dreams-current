@@ -1,4 +1,6 @@
+using Lesson19;
 using UnityEngine;
+using StateMachineSystem.ServiceLocatorSystem;
 
 namespace PhysX
 {
@@ -7,15 +9,34 @@ namespace PhysX
         [SerializeField] private Transform _pitchAnchor;
         [SerializeField] private Transform _jawAnchor;
         [SerializeField] private float _sensitivity;
-    
+
         private float _pitch = 0f;
         private float _jaw = 20f;
-    
+
         private Vector2 _lookInput;
+        private InputControllerr _inputController;
 
         private void Start()
         {
-            InputController.OnLookInput += LookHandler;
+            _inputController = ServiceLocator.Instance.GetService<InputControllerr>();
+
+            if (_inputController != null)
+            {
+                _inputController.enabled = true; // Обов'язково увімкнути
+                _inputController.OnLookInput += LookHandler;
+            }
+            else
+            {
+                Debug.LogError("CameraController: Не вдалося знайти InputControllerr через ServiceLocator.");
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_inputController != null)
+            {
+                _inputController.OnLookInput -= LookHandler;
+            }
         }
 
         private void LateUpdate()
@@ -28,7 +49,7 @@ namespace PhysX
         {
             lookInput *= _sensitivity;
             _pitch += lookInput.x;
-            _jaw += -lookInput.y;
+            _jaw -= lookInput.y;
         }
     }
 }

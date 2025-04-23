@@ -14,8 +14,11 @@ namespace StateMachineSystem.ServiceLocatorSystem
         }
 
         protected virtual void OnDestroy()
-        {
-            ServiceLocator.Instance.RemoveService(this);
-        }
+{
+    if (ServiceLocator.Instance != null)
+    {
+        ServiceLocator.Instance.RemoveService(this);
+    }
+}
     }
 }

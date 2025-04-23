@@ -19,7 +19,7 @@ namespace Lesson19
         public event Action OnInteract;
         public event Action OnHeal;
         public event Action OnInventory;
-    
+
         [SerializeField] private InputActionAsset _inputActionAsset;
         [SerializeField] private string _mapName;
         [SerializeField] private string _UImapName;
@@ -59,12 +59,12 @@ namespace Lesson19
         private InputActionMap _gameplayUIActionMap;
 
         private bool _initialized;
-        
+
         public override Type Type { get; } = typeof(InputControllerr);
 
         public InputAction MoveAction => _moveAction;
         public InputAction LookAroundAction => _lookAroundAction;
-        
+
         protected override void Awake()
         {
             base.Awake();
@@ -75,15 +75,18 @@ namespace Lesson19
         {
             Cursor.visible = false;
             Cursor.lockState = _enabledCursorMode;
-            
+
             _inputActionAsset.Enable();
-            
+
             _actionMap = _inputActionAsset.FindActionMap(_mapName);
             _gameplayUIActionMap = _inputActionAsset.FindActionMap(_UImapName);
-            
+
+            _actionMap.Enable();
+            _gameplayUIActionMap.Enable(); 
+
             _moveAction = _actionMap[_moveName];
             _lookAroundAction = _actionMap[_lookAroundName];
-            //_pointerPositionAction = actionMap[_pointerPositionName];
+            //_pointerPositionAction = _actionMap[_pointerPositionName];
             _primaryFireAction = _actionMap[_primaryFireName];
             _secondaryFireAction = _actionMap[_secondaryFireName];
             _grenadeAction = _actionMap[_grenadeName];
@@ -93,36 +96,36 @@ namespace Lesson19
             _interactAction = _actionMap[_interactName];
             _healAction = _actionMap[_healName];
             _escapeAction = _gameplayUIActionMap[_escapeName];
-            _inventoryAction = _gameplayUIActionMap[_inventoryName];
+            _inventoryAction = _actionMap[_inventoryName];
 
             _moveAction.performed += MovePerformedHandler;
             _moveAction.canceled += MoveCanceledHandler;
-        
+
             _lookAroundAction.performed += LookPerformedHandler;
             _lookAroundAction.canceled += LookPerformedHandler;
 
             _primaryFireAction.performed += PrimaryFirePerformedHandler;
-            
+
             _secondaryFireAction.performed += SecondaryFirePerformedHandler;
             _secondaryFireAction.canceled += SecondaryFireCanceledHandler;
 
             _grenadeAction.performed += GrenadePerformedHandler;
-            
+
             _scoreAction.performed += ScorePerformedHandler;
             _scoreAction.canceled += ScoreCanceledHandler;
-            
+
             _reloadAction.performed += ReloadPerformedHandler;
-            
+
             _jumpAction.performed += JumpPerformedHandler;
-            
+
             _interactAction.performed += InteractPerformedHandler;
-            
+
             _healAction.performed += HealPerformedHandler;
-            
+
             _escapeAction.performed += EscapePerformedHandler;
-            
+
             _inventoryAction.performed += InventoryPerformedHandler;
-            
+
             _initialized = true;
         }
 
@@ -130,7 +133,7 @@ namespace Lesson19
         {
             Cursor.visible = true;
             Cursor.lockState = _disabledCursorMode;
-            
+
             if (_actionMap != null)
                 _actionMap.Disable();
         }
@@ -139,38 +142,38 @@ namespace Lesson19
         {
             _escapeAction.Disable();
         }
-        
+
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
             if (!_initialized)
                 return;
-            
+
             _moveAction.performed -= MovePerformedHandler;
             _moveAction.canceled -= MoveCanceledHandler;
-        
+
             _lookAroundAction.performed -= LookPerformedHandler;
 
             _primaryFireAction.performed -= PrimaryFirePerformedHandler;
-            
+
             _secondaryFireAction.performed -= SecondaryFirePerformedHandler;
             _secondaryFireAction.canceled -= SecondaryFireCanceledHandler;
 
             _grenadeAction.performed -= GrenadePerformedHandler;
-            
+
             _scoreAction.performed -= ScorePerformedHandler;
             _scoreAction.canceled -= ScoreCanceledHandler;
-            
+
             _reloadAction.performed -= ReloadPerformedHandler;
-            
+
             _escapeAction.performed -= EscapePerformedHandler;
             _inventoryAction.performed -= InventoryPerformedHandler;
-            
+
             _jumpAction.performed -= JumpPerformedHandler;
             _interactAction.performed -= InteractPerformedHandler;
             _healAction.performed -= HealPerformedHandler;
-            
+
             OnMoveInput = null;
             OnLookInput = null;
             OnPrimaryInput = null;
@@ -186,12 +189,12 @@ namespace Lesson19
         {
             OnMoveInput?.Invoke(context.ReadValue<Vector2>());
         }
-    
+
         private void MoveCanceledHandler(InputAction.CallbackContext context)
         {
             OnMoveInput?.Invoke(context.ReadValue<Vector2>());
         }
-    
+
         private void LookPerformedHandler(InputAction.CallbackContext context)
         {
             OnLookInput?.Invoke(context.ReadValue<Vector2>());
@@ -201,27 +204,27 @@ namespace Lesson19
         {
             OnPrimaryInput?.Invoke();
         }
-        
+
         private void SecondaryFirePerformedHandler(InputAction.CallbackContext context)
         {
             OnSecondaryInput?.Invoke(true);
         }
-        
+
         private void SecondaryFireCanceledHandler(InputAction.CallbackContext context)
         {
             OnSecondaryInput?.Invoke(false);
         }
-        
+
         private void GrenadePerformedHandler(InputAction.CallbackContext context)
         {
             OnGrenadeInput?.Invoke();
         }
-        
+
         private void ScorePerformedHandler(InputAction.CallbackContext context)
         {
             OnScoreInput?.Invoke(true);
         }
-        
+
         private void ScoreCanceledHandler(InputAction.CallbackContext context)
         {
             OnScoreInput?.Invoke(false);
@@ -231,27 +234,27 @@ namespace Lesson19
         {
             OnReload?.Invoke();
         }
-        
+
         private void JumpPerformedHandler(InputAction.CallbackContext context)
         {
             OnJump?.Invoke();
         }
-        
+
         private void InteractPerformedHandler(InputAction.CallbackContext context)
         {
             OnInteract?.Invoke();
         }
-        
+
         private void HealPerformedHandler(InputAction.CallbackContext context)
         {
             OnHeal?.Invoke();
         }
-        
+
         private void EscapePerformedHandler(InputAction.CallbackContext context)
         {
             OnEscape?.Invoke();
         }
-        
+
         private void InventoryPerformedHandler(InputAction.CallbackContext context)
         {
             OnInventory?.Invoke();

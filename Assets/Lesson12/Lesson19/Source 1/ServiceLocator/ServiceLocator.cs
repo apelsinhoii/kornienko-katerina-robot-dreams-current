@@ -48,5 +48,10 @@ namespace StateMachineSystem.ServiceLocatorSystem
             _services.TryGetValue(typeof(T), out IService service);
             return service as T;
         }
+
+        internal void UnregisterService(MonoServiceBase monoServiceBase)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
