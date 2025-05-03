@@ -28,6 +28,8 @@ namespace StateMachineSystem
         public Vector3 AimPoint => _hitPoint;
         public Vector3 CollisionPoint => _collisonPoint;
 
+        public float AimValue { get; internal set; }
+
         private InputController _inputController;
 
         private void OnEnable()

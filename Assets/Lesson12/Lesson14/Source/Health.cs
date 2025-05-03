@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using MainMenu;
 
 namespace Dummies
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour , IHealth
     {
         public event Action<int> OnHealthChanged;
         public event Action<float> OnHealthChanged01;

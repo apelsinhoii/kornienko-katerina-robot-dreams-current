@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Lesson19
 {
-    public class InputControllerr : MonoServiceBase
+    public class InputControllerr : MonoServiceBase, IService
     {
         public event Action<Vector2> OnMoveInput;
         public event Action<Vector2> OnLookInput;
@@ -141,6 +141,20 @@ namespace Lesson19
         public void DisableEscape()
         {
             _escapeAction.Disable();
+        }
+
+        public void Lock()
+        {
+            Cursor.visible = true;
+            Cursor.lockState = _disabledCursorMode;
+            _actionMap.Disable();
+        }
+
+        public void Unlock()
+        {
+            Cursor.visible = false;
+            Cursor.lockState = _enabledCursorMode;
+            _actionMap.Enable();
         }
 
         protected override void OnDestroy()

@@ -23,7 +23,6 @@ namespace StateMachineSystem
         [SerializeField] protected LayerMask _layerMask;
 
         protected int _tilingId;
-
         protected InputController _inputController;
         
         protected virtual void Start()
@@ -49,6 +48,7 @@ namespace StateMachineSystem
             Vector3 muzzleForward = _muzzleTransform.forward;
             Ray ray = new Ray(muzzlePosition, muzzleForward);
             Vector3 hitPoint = muzzlePosition + muzzleForward * _range;
+            
             if (Physics.SphereCast(ray, _shotRadius, out RaycastHit hitInfo, _range, _layerMask))
             {
                 Vector3 directVector = hitInfo.point - _muzzleTransform.position;
@@ -87,6 +87,12 @@ namespace StateMachineSystem
             tiling.y = shot.distance * 0.5f / _shotVisualDiameter;
             shot.outerPropertyBlock.SetVector(_tilingId, tiling);
             shot.Outer.SetPropertyBlock(shot.outerPropertyBlock);
+        }
+
+        // ✅ Реалізований метод Shoot
+        public virtual void Shoot()
+        {
+            PrimaryInputHandler();
         }
     }
 }

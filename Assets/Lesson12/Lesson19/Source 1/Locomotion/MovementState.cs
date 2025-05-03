@@ -16,7 +16,8 @@ namespace StateMachineSystem.Locomotion
         private Vector3 _localDirection;
         
         private InputControllerr _inputController;
-        
+        private LocomotionController locomotionController;
+
         public MovementState(
             StateMachine stateMachine,
             byte stateId,
@@ -37,6 +38,13 @@ namespace StateMachineSystem.Locomotion
             _inputController = ServiceLocator.Instance.GetService<Lesson19.InputControllerr>();
             
             _inputController.OnMoveInput += MoveHandler;
+        }
+
+        public MovementState(StateMachine stateMachine, byte stateId, CharacterController characterController, Transform transform, LocomotionController locomotionController) : base(stateMachine, stateId)
+        {
+            _characterController = characterController;
+            _transform = transform;
+            this.locomotionController = locomotionController;
         }
 
         private void MoveHandler(Vector2 input)

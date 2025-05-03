@@ -20,7 +20,9 @@ namespace Shooting
 
         private InputControllerr _inputController;
 
+        // ✅ Публічна властивість без помилки
         public Vector3 AimPoint => _hitPoint;
+        public float AimValue => _aimValue;
 
         private void Start()
         {
@@ -65,8 +67,11 @@ namespace Shooting
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(_gunTransform.position, _hitPoint);
+            if (_gunTransform != null)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(_gunTransform.position, _hitPoint);
+            }
         }
 
         private void SecondaryInputHandler(bool performed)

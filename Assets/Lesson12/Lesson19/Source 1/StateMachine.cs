@@ -1,79 +1,68 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace StateMachineSystem
 {
-    public class StateMachine : IDisposable
+    public class StateMachine
     {
-        public Action<byte> OnStateChange;
-        
+        public event Action<byte> OnStateChange;
+
         private readonly Dictionary<byte, IState> _states = new();
-
         private IState _currentState;
+        public byte CurrentStateId { get; private set; }
 
-        public IState CurrentState
+        public IState CurrentState => _currentState;
+
+        public void AddState(byte id, IState state)
         {
-            get => _currentState;
-            private set
+            if (!_states.ContainsKey(id))
+                _states.Add(id, state);
+        }
+
+        public void InitState(byte id)
+        {
+            if (_states.TryGetValue(id, out var state))
             {
-                if (_currentState == value)
-                    return;
+                _currentState = state;
+                CurrentStateId = id;
+                _currentState.Enter();
+                OnStateChange?.Invoke(id);
+            }
+        }
+
+        public void SetState(byte newStateId)
+        {
+            if (newStateId == CurrentStateId) return;
+
+            ChangeStateInternal(newStateId);
+        }
+
+        public void ForceState(byte newStateId)
+        {
+            ChangeStateInternal(newStateId);
+        }
+
+        private void ChangeStateInternal(byte newStateId)
+        {
+            if (_states.TryGetValue(newStateId, out var newState))
+            {
                 _currentState?.Exit();
-                _currentState = value;
-                _currentState?.Enter();
-                OnStateChange?.Invoke(_currentState.StateId);
+                _currentState = newState;
+                CurrentStateId = newStateId;
+                _currentState.Enter();
+                OnStateChange?.Invoke(newStateId);
             }
-        }
-
-        public void InitState(byte stateID)
-        {
-            if (!_states.TryGetValue(stateID, out IState state))
-            {
-                Debug.LogWarning("State " + stateID + " not found");
-                return;
-            }
-            _currentState = state;
-            _currentState?.Enter();
-        }
-        
-        public void ForceState(byte stateID)
-        {
-            if (!_states.TryGetValue(stateID, out IState state))
-            {
-                Debug.LogWarning("State " + stateID + " not found");
-                return;
-            }
-            _currentState?.Exit();
-            _currentState = state;
-            _currentState?.Enter();
-            OnStateChange?.Invoke(_currentState.StateId);
-        }
-        
-        public void AddState(byte stateID, IState state)
-        {
-            _states.Add(stateID, state);
-        }
-
-        public void SetState(byte stateID)
-        {
-            if (!_states.TryGetValue(stateID, out IState state))
-            {
-                Debug.LogWarning("State " + stateID + " not found");
-                return;
-            }
-            CurrentState = state;
         }
 
         public void Update(float deltaTime)
         {
-            CurrentState?.Update(deltaTime);
+            _currentState?.Update(deltaTime);
         }
 
         public void Dispose()
         {
-            foreach (IState state in _states.Values)
-                state?.Dispose();
+            _currentState?.Exit();
+            _states.Clear();
         }
     }
 }

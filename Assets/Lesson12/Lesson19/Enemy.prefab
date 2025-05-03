@@ -274,7 +274,7 @@ Transform:
   m_GameObject: {fileID: 8568331981981124927}
   serializedVersion: 2
   m_LocalRotation: {x: -0.008023258, y: -0, z: -0, w: 0.9999678}
-  m_LocalPosition: {x: 16.448887, y: -60.408188, z: 130.79771}
+  m_LocalPosition: {x: 16.26, y: -60.408188, z: 130.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -394,17 +394,17 @@ PrefabInstance:
     - target: {fileID: 442323383708394282, guid: 2ba114d4e2e77e547877b3dd07309aa3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.5688868
+      value: -12.94
       objectReference: {fileID: 0}
     - target: {fileID: 442323383708394282, guid: 2ba114d4e2e77e547877b3dd07309aa3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 61.35119
+      value: 61.53
       objectReference: {fileID: 0}
     - target: {fileID: 442323383708394282, guid: 2ba114d4e2e77e547877b3dd07309aa3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -85.10771
+      value: -95.72
       objectReference: {fileID: 0}
     - target: {fileID: 442323383708394282, guid: 2ba114d4e2e77e547877b3dd07309aa3,
         type: 3}
@@ -459,7 +459,7 @@ PrefabInstance:
     - target: {fileID: 1016738269782989300, guid: 2ba114d4e2e77e547877b3dd07309aa3,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1016738269782989300, guid: 2ba114d4e2e77e547877b3dd07309aa3,
         type: 3}
@@ -517,12 +517,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4083046535264580757}
   m_SourcePrefab: {fileID: 100100000, guid: 2ba114d4e2e77e547877b3dd07309aa3, type: 3}
---- !u!23 &4785559127599133332 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2019398886081853647, guid: 2ba114d4e2e77e547877b3dd07309aa3,
-    type: 3}
-  m_PrefabInstance: {fileID: 6804904117204863579}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5797203835263062959 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1016738269782989300, guid: 2ba114d4e2e77e547877b3dd07309aa3,
@@ -530,7 +524,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6804904117204863579}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c6a9412c136e5e4f9cd769a6879d4c5, type: 3}
   m_Name: 
@@ -620,9 +614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5075497a63f4692b846d79cedf428f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyController: {fileID: 7378498868907981768}
-  _renderer: {fileID: 4785559127599133332}
-  _rimColors: []
+  _rimRenderer: {fileID: 0}
+  _rimColorProperty: _RimColor
 --- !u!114 &755958850703292339
 MonoBehaviour:
   m_ObjectHideFlags: 0

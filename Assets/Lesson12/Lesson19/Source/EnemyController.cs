@@ -23,7 +23,6 @@ namespace BehaviourTreeSystem
         [SerializeField] private Transform _weaponTransform;
         [SerializeField] private HitScanGun _hitScanGun;
         [SerializeField] private WeaponData _weaponData;
-
         [SerializeField] private Playerdar _playerdar;
         
         [SerializeField, ReadOnly] private float _patrolStamina;
@@ -39,7 +38,7 @@ namespace BehaviourTreeSystem
         public float PatrolStamina
         {
             get => _patrolStamina;
-            set { _patrolStamina = Mathf.Clamp(value, 0, _data.MaxPatrolStamina); }
+            set => _patrolStamina = Mathf.Clamp(value, 0, _data.MaxPatrolStamina);
         }
 
         public EnemyData Data => _data;
@@ -64,9 +63,15 @@ namespace BehaviourTreeSystem
 
             InitStateMachine();
             _behaviourMachine.OnStateChange += StateChangeHandler;
-            
-            InitBehaviourTree();
 
+        }
+
+        public void Initialize(INavPointProvider navPointProvider, Camera camera)
+        {
+            _navPointProvider = navPointProvider;
+            _healthIndicator.Billboard.SetCamera(camera);
+
+            InitBehaviourTree();
             _health.OnDeath += HealthDeathHandler;
         }
 
@@ -83,8 +88,6 @@ namespace BehaviourTreeSystem
             _behaviourMachine.AddState((byte)EnemyBehaviour.Search,
                 new SearchBehaviour(_behaviourMachine, (byte)EnemyBehaviour.Search, this));
             
-            /*_behaviourMachine.AddState((byte)EnemyBehaviour.Attack,
-                new AttackBehaviour(_behaviourMachine, (byte)EnemyBehaviour.Attack, this));*/
             _behaviourMachine.AddState((byte)EnemyBehaviour.Attack,
                 new ShootBehaviour(_behaviourMachine, (byte)EnemyBehaviour.Attack, this));
             
@@ -94,6 +97,12 @@ namespace BehaviourTreeSystem
 
         protected virtual void InitBehaviourTree()
         {
+            if (_navPointProvider == null)
+            {
+                Debug.LogError($"{nameof(EnemyController)}: NavPointProvider is NULL in InitBehaviourTree!");
+                return;
+            }
+
             BehaviourLeaf idleLeaf = new BehaviourLeaf((byte)EnemyBehaviour.Idle);
             BehaviourLeaf patrolLeaf = new BehaviourLeaf((byte)EnemyBehaviour.Patrol);
 
@@ -113,7 +122,8 @@ namespace BehaviourTreeSystem
         
         private void FixedUpdate()
         {
-            _behaviourMachine.Update(Time.fixedDeltaTime);
+            if (_behaviourMachine != null)
+                _behaviourMachine.Update(Time.fixedDeltaTime);
         }
 
         private void StateChangeHandler(byte stateId)
@@ -121,16 +131,11 @@ namespace BehaviourTreeSystem
             _currentBehaviour = (EnemyBehaviour)stateId;
         }
 
-        public void Initialize(INavPointProvider navPointProvider, Camera camera)
-        {
-            _navPointProvider = navPointProvider;
-            _healthIndicator.Billboard.SetCamera(camera);
-        }
-
         public void ComputeBehaviour()
         {
             if (_behaviourTree == null)
                 return;
+
             _behaviourMachine.SetState(_behaviourTree.GetBehaviourId());
         }
 
@@ -146,12 +151,12 @@ namespace BehaviourTreeSystem
 
         protected bool HasTargetCondition()
         {
-            return _playerdar.HasTarget;
+            return _playerdar != null && _playerdar.HasTarget;
         }
 
         protected bool SeesTargetCondition()
         {
-            return _playerdar.SeesTarget;
+            return _playerdar != null && _playerdar.SeesTarget;
         }
 
         protected void HealthDeathHandler()
