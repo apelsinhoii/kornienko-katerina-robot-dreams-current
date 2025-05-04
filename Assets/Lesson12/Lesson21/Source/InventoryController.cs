@@ -1,0 +1,34 @@
+using Inventory.ItemSystem;
+using StateMachineSystem.ServiceLocatorSystem;
+using UnityEngine;
+using Lesson19; 
+
+namespace Inventory.Lobby
+{
+    public class InventoryController : MonoBehaviour
+    {
+        private InputControllerr _inputController; 
+        private IInventoryService _inventoryService;
+
+        private void Start()
+        {
+            _inputController = ServiceLocator.Instance.GetService<InputControllerr>();
+            _inventoryService = ServiceLocator.Instance.GetService<IInventoryService>();
+
+            _inputController.OnInventory += InventoryHandler;
+        }
+
+        private void OnDestroy()
+        {
+            if (_inputController != null)
+            {
+                _inputController.OnInventory -= InventoryHandler;
+            }
+        }
+
+        private void InventoryHandler()
+        {
+            _inventoryService.ToggleInventory();
+        }
+    }
+}
