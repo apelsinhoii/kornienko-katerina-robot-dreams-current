@@ -1,16 +1,12 @@
-using System;
 using System.Collections;
 using Shooting;
-using StateMachineSystem.ServiceLocatorSystem;
+using StateMachineSystem;
 using UnityEngine;
 
 namespace BehaviourTreeSystem
 {
-    public class HitScanGun : MonoBehaviour
+    public class HitScanGun : HitScanGunBase
     {
-        public event Action<Collider> OnHit;
-        public event Action OnShot;
-
         [SerializeField] protected HitscanShotAspect _shotPrefab;
         [SerializeField] protected Transform _muzzleTransform;
         [SerializeField] protected float _decaySpeed;
@@ -28,7 +24,7 @@ namespace BehaviourTreeSystem
             _tilingId = Shader.PropertyToID(_tilingName);
         }
 
-        public virtual void Shoot()
+        public override void Shoot()
         {
             Vector3 muzzlePosition = _muzzleTransform.position;
             Vector3 muzzleForward = _muzzleTransform.forward;
@@ -40,7 +36,8 @@ namespace BehaviourTreeSystem
                 Vector3 rayVector = Vector3.Project(directVector, ray.direction);
                 hitPoint = muzzlePosition + rayVector;
 
-                OnHit?.Invoke(hitInfo.collider);
+                InvokeHit(hitInfo.collider);
+                InvokeHitPrecise(hitInfo);
             }
 
             HitscanShotAspect shot = Instantiate(_shotPrefab, hitPoint, _muzzleTransform.rotation);
@@ -48,7 +45,7 @@ namespace BehaviourTreeSystem
             shot.outerPropertyBlock = new MaterialPropertyBlock();
             StartCoroutine(ShotRoutine(shot));
 
-            OnShot?.Invoke();
+            InvokeShot();
         }
 
         protected IEnumerator ShotRoutine(HitscanShotAspect shot)

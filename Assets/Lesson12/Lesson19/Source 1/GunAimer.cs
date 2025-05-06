@@ -15,29 +15,27 @@ namespace StateMachineSystem
         [SerializeField] private LayerMask _rayMask;
         [SerializeField] private CinemachineMixingCamera _mixingCamera;
         [SerializeField] private float _aimSpeed;
-        [SerializeField] private float _regularSensetivity;
-        [SerializeField] private float _aimSensetivity;
+        [SerializeField] private float _regularSensitivity;
+        [SerializeField] private float _aimSensitivity;
         [SerializeField] private CameraController _cameraController;
 
         private Vector3 _hitPoint;
-        private Vector3 _collisonPoint;
+        private Vector3 _collisionPoint;
         private bool _hasCameraHit;
         private float _aimValue;
         private float _targetAimValue;
 
-        public Vector3 AimPoint => _hitPoint;
-        public Vector3 CollisionPoint => _collisonPoint;
-
-        public float AimValue { get; internal set; }
-
         private InputController _inputController;
+
+        public Vector3 AimPoint => _hitPoint;
+        public Vector3 CollisionPoint => _collisionPoint;
+        public float AimValue => _aimValue;
 
         private void OnEnable()
         {
-            if (_inputController == null)
-                _inputController = ServiceLocator.Instance.GetService<InputController>();
+            _inputController ??= ServiceLocator.Instance.GetService<InputController>();
             _inputController.OnSecondaryInput += SecondaryInputHandler;
-            _cameraController.SetSensitivity(_regularSensetivity);
+            _cameraController.SetSensitivity(_regularSensitivity);
         }
 
         private void OnDisable()
@@ -47,10 +45,11 @@ namespace StateMachineSystem
 
         private void FixedUpdate()
         {
-            Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
+            Ray ray = new(_cameraTransform.position, _cameraTransform.forward);
             _hitPoint = _cameraTransform.position + _cameraTransform.forward * _rayDistance;
-            _collisonPoint = _hitPoint;
+            _collisionPoint = _hitPoint;
             _hasCameraHit = false;
+
             if (Physics.Raycast(ray, out RaycastHit hitInfo, _rayDistance, _rayMask, QueryTriggerInteraction.Ignore))
             {
                 _hasCameraHit = true;
@@ -58,11 +57,10 @@ namespace StateMachineSystem
             }
 
             _gunTransform.LookAt(_hitPoint);
-            
-            if (Physics.Raycast(_gunTransform.position, _gunTransform.forward, out RaycastHit collisionInfo, _rayDistance,
-                    _rayMask, QueryTriggerInteraction.Ignore))
+
+            if (Physics.Raycast(_gunTransform.position, _gunTransform.forward, out RaycastHit collisionInfo, _rayDistance, _rayMask, QueryTriggerInteraction.Ignore))
             {
-                _collisonPoint = collisionInfo.point;
+                _collisionPoint = collisionInfo.point;
             }
         }
 
@@ -71,7 +69,7 @@ namespace StateMachineSystem
             _aimValue = Mathf.MoveTowards(_aimValue, _targetAimValue, _aimSpeed * Time.deltaTime);
             _mixingCamera.m_Weight0 = 1f - _aimValue;
             _mixingCamera.m_Weight1 = _aimValue;
-            
+
             _gunTransform.position = Vector3.Lerp(_gunRegularAnchor.position, _gunAimAnchor.position, _aimValue);
         }
 
@@ -86,7 +84,7 @@ namespace StateMachineSystem
         private void SecondaryInputHandler(bool performed)
         {
             _targetAimValue = performed ? 1f : 0f;
-            _cameraController.SetSensitivity(performed ? _aimSensetivity : _regularSensetivity);
+            _cameraController.SetSensitivity(performed ? _aimSensitivity : _regularSensitivity);
         }
     }
 }

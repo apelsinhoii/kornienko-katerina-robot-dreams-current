@@ -6,11 +6,8 @@ using UnityEngine;
 
 namespace StateMachineSystem
 {
-    public class HitScanGun : MonoBehaviour
+    public class HitScanGun : HitScanGunBase
     {
-        public event Action<Collider> OnHit;
-        public event Action OnShot;
-        
         [SerializeField] protected GunAimer _aimer;
         [SerializeField] protected HitscanShotAspect _shotPrefab;
         [SerializeField] protected Transform _muzzleTransform;
@@ -23,6 +20,7 @@ namespace StateMachineSystem
         [SerializeField] protected LayerMask _layerMask;
 
         protected int _tilingId;
+
         protected InputController _inputController;
         
         protected virtual void Start()
@@ -42,20 +40,20 @@ namespace StateMachineSystem
             _inputController.OnPrimaryInput -= PrimaryInputHandler;
         }
 
-        protected virtual void PrimaryInputHandler()
+        public override void Shoot()
         {
             Vector3 muzzlePosition = _muzzleTransform.position;
             Vector3 muzzleForward = _muzzleTransform.forward;
             Ray ray = new Ray(muzzlePosition, muzzleForward);
             Vector3 hitPoint = muzzlePosition + muzzleForward * _range;
-            
             if (Physics.SphereCast(ray, _shotRadius, out RaycastHit hitInfo, _range, _layerMask))
             {
                 Vector3 directVector = hitInfo.point - _muzzleTransform.position;
                 Vector3 rayVector = Vector3.Project(directVector, ray.direction);
                 hitPoint = muzzlePosition + rayVector;
                 
-                OnHit?.Invoke(hitInfo.collider);
+                InvokeHit(hitInfo.collider);
+                InvokeHitPrecise(hitInfo);
             }
 
             HitscanShotAspect shot = Instantiate(_shotPrefab, hitPoint, _muzzleTransform.rotation);
@@ -63,7 +61,12 @@ namespace StateMachineSystem
             shot.outerPropertyBlock = new MaterialPropertyBlock();
             StartCoroutine(ShotRoutine(shot));
             
-            OnShot?.Invoke();
+            InvokeShot();
+        }
+        
+        protected virtual void PrimaryInputHandler()
+        {
+            Shoot();
         }
 
         protected IEnumerator ShotRoutine(HitscanShotAspect shot)
@@ -87,12 +90,6 @@ namespace StateMachineSystem
             tiling.y = shot.distance * 0.5f / _shotVisualDiameter;
             shot.outerPropertyBlock.SetVector(_tilingId, tiling);
             shot.Outer.SetPropertyBlock(shot.outerPropertyBlock);
-        }
-
-        // ✅ Реалізований метод Shoot
-        public virtual void Shoot()
-        {
-            PrimaryInputHandler();
         }
     }
 }
